@@ -13,45 +13,13 @@ servers:
         description: Domain
 paths:
   /api/images:
-  get:
-    tags:
-    - Images
+    get:
+      tags:
+      - Images
       summary: "Finds image by status"
       responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: 
-                  imageURIs:
-                    type: array
-                    items: 
-                      type: string
-                statusCode: 
-                  type: integer
-                items:
-                  $ref: "#/definitions/image"
-  post:
-    tags:
-      - Images
-      summary: "Add a new image to the site"
-      requestBody: 
-        content: 
-          schema: 
-            object:
-              properties:
-                picture: 
-                  type: string
-                  format: binary
-              required:
-                - picture
-        description: "upload image"
-        required: true
-      respomses:
-        200:
-          description: OK
+          200:
+            description: OK
             content:
               application/json:
                 schema:
@@ -61,5 +29,36 @@ paths:
                       type: array
                       items: 
                         type: string
-                  statusCode: 
-                    type: integer
+                    statusCode: 
+                      type: integer
+
+
+    post:
+      tags:
+        - Images
+      summary: "Add a new image to the site"
+      requestBody: 
+          content: 
+            multipart/form-data:
+              schema: 
+                type: object
+                properties:
+                  picture: 
+                    type: string
+                    format: binary
+                required:
+                  - picture
+          description: "upload image"
+          required: true
+      responses:
+          200:
+            description: OK
+            content:
+                application/json:
+                  schema:
+                    type: object
+                    properties: 
+                        imageURIs:
+                          type: string
+                        statusCode: 
+                         type: integer
